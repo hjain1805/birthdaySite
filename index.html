@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#d9578d" />
+  <title>Happy Birthday!</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Great+Vibes&display=swap');
+
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      font-family: "Fredoka", "Trebuchet MS", sans-serif;
+      background: #f6c4d4;
+    }
+    .curtain {
+      position: fixed; top: 0; z-index: 0; width: min(22vw, 255px); height: min(61vh, 520px); pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(111, 30, 62, .46), transparent 8%, rgba(255, 184, 202, .25) 19%, transparent 31%, rgba(116, 31, 65, .4) 47%, transparent 61%, rgba(255, 190, 207, .27) 77%, rgba(98, 24, 54, .5)),
+        linear-gradient(115deg, #a93468, #df789b 38%, #ba3f71 70%, #7f204f);
+      border-bottom: 4px solid #eac266;
+      box-shadow: 0 9px 19px rgba(104, 28, 59, .28), inset 2px 0 10px rgba(255, 228, 220, .28);
+    }
+    .curtain::before {
+      content: ""; position: absolute; top: 0; width: 13px; height: 100%;
+      background: linear-gradient(90deg, #9d6232, #ffe39a 45%, #a86c34); box-shadow: 0 0 8px rgba(255, 222, 139, .72);
+    }
+    .curtain::after {
+      content: ""; position: absolute; bottom: -27px; width: 42px; height: 25px;
+      background: repeating-linear-gradient(90deg, #bd7c35 0 4px, #ffe6a1 4px 8px); border-radius: 0 0 50% 50%;
+      box-shadow: 0 7px 7px rgba(100, 46, 37, .2);
+    }
+    .curtain--left { left: 0; border-radius: 0 0 75% 0; }
+    .curtain--left::before { left: 0; }
+    .curtain--left::after { right: 8%; }
+    .curtain--right { right: 0; border-radius: 0 0 0 75%; }
+    .curtain--right::before { right: 0; }
+    .curtain--right::after { left: 8%; }
+    .confetti { position: fixed; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+    .piece {
+      position: absolute; top: -12vh; width: 11px; height: 18px; border-radius: 2px;
+      background: var(--color); opacity: .9;
+      animation: fall var(--duration) linear var(--delay) infinite, spin var(--spin) linear var(--delay) infinite;
+    }
+    .piece:nth-child(3n) { border-radius: 50%; width: 10px; height: 10px; }
+    .piece:nth-child(4n) { width: 7px; height: 22px; }
+    @keyframes fall { to { transform: translate3d(var(--drift), 120vh, 0); } }
+    @keyframes spin { to { rotate: 720deg; } }
+    main { position: relative; z-index: 2; width: min(92vw, 720px); padding: 2rem; text-align: center; }
+    .card {
+      padding: clamp(2.5rem, 8vw, 5rem) clamp(1.4rem, 6vw, 4.5rem);
+      border: 1px solid rgba(255, 221, 184, .7); border-radius: 32px;
+      background: rgba(255, 211, 226, .3); box-shadow: 0 22px 60px rgba(116, 20, 67, .34), 0 0 30px rgba(255, 210, 117, .28), inset 0 1px 0 rgba(255, 244, 235, .5);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    }
+    .sparkle { display: block; margin-bottom: .8rem; color: #ffd776; font-size: clamp(2.1rem, 6vw, 3.8rem); line-height: 1; text-shadow: 0 0 20px rgba(255,215,118,.7); animation: twinkle 1.8s ease-in-out infinite alternate; }
+    h1 {
+      margin: 0; font-family: "Great Vibes", "Brush Script MT", cursive; font-size: clamp(4rem, 13vw, 8rem); font-weight: 400; line-height: 1;
+      background: linear-gradient(100deg, #ffd9e7, #f47baa 38%, #ffd46e 67%, #fff0b5); -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 5px 0 rgba(130, 31, 76, .28));
+    }
+    p { margin: 1.4rem auto 2rem; max-width: 32rem; color: #fff8fb; font-size: clamp(1.05rem, 3.8vw, 1.35rem); line-height: 1.55; text-shadow: 0 2px 8px rgba(101, 20, 60, .35); }
+    button {
+      border: 0; border-radius: 999px; padding: .9rem 1.5rem; cursor: pointer; color: #77244b; font: 700 1.05rem "Fredoka", sans-serif;
+      background: linear-gradient(135deg, #ffb6d0, #ffd56e); box-shadow: 0 8px 0 #b74376, 0 14px 23px rgba(102, 22, 63, .3); transition: transform .18s ease, box-shadow .18s ease;
+    }
+    button:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 11px 0 #b74376, 0 18px 28px rgba(102, 22, 63, .34); }
+    button:active { transform: translateY(5px); box-shadow: 0 3px 0 #b74376, 0 7px 14px rgba(102, 22, 63, .24); }
+    button:focus-visible { outline: 3px solid white; outline-offset: 4px; }
+    @keyframes twinkle { to { transform: scale(1.16) rotate(10deg); filter: brightness(1.25); } }
+    @media (max-width: 430px) { main { padding: 1rem; } .card { border-radius: 25px; } .curtain { width: 19vw; height: 42vh; } }
+    @media (prefers-reduced-motion: reduce) { .piece, .sparkle { animation: none; } }
+  </style>
+</head>
+<body>
+  <div class="curtain curtain--left" aria-hidden="true"></div>
+  <div class="curtain curtain--right" aria-hidden="true"></div>
+  <div class="confetti" aria-hidden="true" id="confetti"></div>
+  <main>
+    <section class="card" aria-label="Birthday greeting">
+      <span class="sparkle">✦ ✦ ✦</span>
+      <h1>Happy Birthday!</h1>
+      <p>Happy Birthday, Harshita! Wishing you a day filled with joy and laughter!</p>
+      <button id="musicButton" type="button" aria-pressed="false">▶ Play Music</button>
+    </section>
+  </main>
+  <script>
+    const colors = ['#f77ca8', '#ffd166', '#fffafc', '#d8b4f8', '#c83d7c'];
+    const confetti = document.getElementById('confetti');
+    for (let i = 0; i < 75; i++) {
+      const piece = document.createElement('i');
+      piece.className = 'piece';
+      piece.style.setProperty('--color', colors[i % colors.length]);
+      piece.style.left = `${Math.random() * 100}%`;
+      piece.style.setProperty('--duration', `${5 + Math.random() * 5}s`);
+      piece.style.setProperty('--delay', `${-Math.random() * 10}s`);
+      piece.style.setProperty('--spin', `${1.8 + Math.random() * 2.8}s`);
+      piece.style.setProperty('--drift', `${-100 + Math.random() * 200}px`);
+      confetti.appendChild(piece);
+    }
+
+    const button = document.getElementById('musicButton');
+    let audioContext, masterGain, isPlaying = false, timer;
+    const melody = [523.25, 523.25, 587.33, 523.25, 698.46, 659.25, 523.25, 523.25, 587.33, 523.25, 783.99, 698.46];
+    function playNote(frequency, start, duration) {
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      osc.type = 'triangle'; osc.frequency.value = frequency;
+      gain.gain.setValueAtTime(0, start);
+      gain.gain.linearRampToValueAtTime(.13, start + .03);
+      gain.gain.exponentialRampToValueAtTime(.001, start + duration);
+      osc.connect(gain).connect(masterGain); osc.start(start); osc.stop(start + duration);
+    }
+    function scheduleTune() {
+      if (!isPlaying) return;
+      const start = audioContext.currentTime + .05;
+      melody.forEach((note, index) => playNote(note, start + index * .32, .29));
+      timer = setTimeout(scheduleTune, melody.length * 320 + 120);
+    }
+    button.addEventListener('click', async () => {
+      if (!audioContext) { audioContext = new (window.AudioContext || window.webkitAudioContext)(); masterGain = audioContext.createGain(); masterGain.gain.value = .75; masterGain.connect(audioContext.destination); }
+      if (isPlaying) {
+        isPlaying = false; clearTimeout(timer); button.textContent = '▶ Play Music'; button.setAttribute('aria-pressed', 'false');
+      } else {
+        await audioContext.resume(); isPlaying = true; scheduleTune(); button.textContent = '❚❚ Pause Music'; button.setAttribute('aria-pressed', 'true');
+      }
+    });
+  </script>
+</body>
+</html>
